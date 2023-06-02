@@ -30,11 +30,13 @@ const homeRoutes = require('./routes/home.routes');
 const authRoutes = require('./routes/auth.routes');
 const siteRoutes = require('./routes/site.routes');
 const droneRoutes = require('./routes/drone.routes');
+const categoryRoutes = require('./routes/category.routes');
 
 app.use(  homeRoutes );
 app.use( '/droneManager/api/v1' , authRoutes );
 app.use( '/droneManager/api/v1' , siteRoutes );
 app.use( '/droneManager/api/v1' , droneRoutes );
+app.use( '/droneManager/api/v1' , categoryRoutes );
 
 
 app.listen( process.env.PORT, () => {

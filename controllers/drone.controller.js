@@ -38,9 +38,7 @@ const addDrone = async (req, res) => {
 
    createdBy =user.username;
 
-    /**
-      * Update the User
-    */
+   
     
 
 
@@ -55,10 +53,13 @@ const addDrone = async (req, res) => {
 
     const savedDrone = await newDrone.save();
 
+     /**
+      * Update the User
+    */
     user.drones.push(savedDrone._id);
     await user.save();
 
-    
+
 
     res.status(200).json({
         success : true ,
