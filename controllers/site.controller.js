@@ -127,7 +127,7 @@ exports.getAllSites =  async (req, res) => {
     const sites = await Site.find();
     res.status(200).json({
       success : true ,
-      message : "Fetched all Sites !",
+      message : sites.length > 0 ? "Fetched all Sites !" : `No sites Available`,
       TotalSites : sites.length ,
       sites
     });

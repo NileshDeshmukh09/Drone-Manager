@@ -77,9 +77,10 @@ const getAllCategories = async (req, res) => {
 
   try {
     const categories = await Category.find();
-    res.json({
+    res.status(200).json({
         success : true ,
-        message : `Fetched All Categories.`,
+        message : categories.length > 0 ? `Fetched All Categories.` : `No Categories Available`,
+        totalCategories : categories.length ,
         categories
     });
   } catch (err) {

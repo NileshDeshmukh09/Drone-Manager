@@ -175,7 +175,7 @@ const getAllMissions = async (req, res) => {
 
         res.status(200).json({
             success: true,
-            message: `Mission Fetched !`,
+            message: missions.length > 0 ? `Missions Fetched !` : `No Mission Available`,
             TotalMission : missions.length ,
             missions
         });
