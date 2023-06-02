@@ -1,5 +1,6 @@
 
 const Site = require('../models/site.model');
+const User = require('../models/user.model');
 
 // Add a new site
 exports.createSite = async (req, res) => {
@@ -9,6 +10,13 @@ exports.createSite = async (req, res) => {
     // Validate request body
     if (!site_name  ) {
       return res.status(400).json({ error: 'please provide site name ' });
+    }
+
+    const existedSite = await Site.findOne({ site_name : site_name});
+    console.log(existedSite);
+
+    if( existedSite  ){
+      return res.status(400).json({ error: 'Site already exists ! ' });
     }
     if ( !position ) {
       return res.status(400).json({ error: 'position not provided ' });
@@ -57,17 +65,27 @@ exports.updateSite = async (req, res) => {
     // }
 
 
-    const updatedSite = await Site.findByIdAndUpdate(
-      id,
-      { site_name, position },
-      { new: true }
-    );
-
-    if ( !updatedSite ) {
+    const site = await Site.findOne({
+      _id :  id
+    });
+    console.log("site Found !!!!!");
+    if ( !site ) {
       return res.status(404).json({ 
         success : false,
         error: 'Site not found' });
     }
+
+    site.site_name  = site_name != undefined ? site_name : site.site_name;
+    site.position.latitude = position.latitude != undefined ? position.latitude : site.position.latitude;
+    site.position.longitude =  position.longitude != undefined ? position.longitude  : site.position.longitude ;
+
+    console.log("Changes Saved !!!!!");
+
+    
+     /** 
+        * Saved the Changed Site
+      */
+    const updatedSite = await site.save();
 
     res.status(200).send({
       success : true,
@@ -75,6 +93,7 @@ exports.updateSite = async (req, res) => {
       updatedSite
     });
   } catch (error) {
+    console.log(error);
     res.status(500).send({ error: 'Internal server error' });
   }
 };

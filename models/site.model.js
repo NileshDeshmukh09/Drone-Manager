@@ -8,7 +8,8 @@ const siteSchema = new mongoose.Schema({
 
   site_name: {
     type: String,
-    required: true
+    unique : true,
+    required: true,
   },
 
   position: {
