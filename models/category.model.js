@@ -28,10 +28,6 @@ const categoriesSchema = new mongoose.Schema({
     default: Date.now
   },
 
-//   missions : {
-//         type: [mongoose.Schema.Types.ObjectId],
-//         ref: 'Mission',    
-//   }
 });
 
 module.exports = mongoose.model('Category', categoriesSchema);

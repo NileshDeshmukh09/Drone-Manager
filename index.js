@@ -31,12 +31,14 @@ const authRoutes = require('./routes/auth.routes');
 const siteRoutes = require('./routes/site.routes');
 const droneRoutes = require('./routes/drone.routes');
 const categoryRoutes = require('./routes/category.routes');
+const missionRoutes = require('./routes/mission.routes');
 
 app.use(  homeRoutes );
 app.use( '/droneManager/api/v1' , authRoutes );
 app.use( '/droneManager/api/v1' , siteRoutes );
 app.use( '/droneManager/api/v1' , droneRoutes );
 app.use( '/droneManager/api/v1' , categoryRoutes );
+app.use( '/droneManager/api/v1' , missionRoutes );
 
 
 app.listen( process.env.PORT, () => {

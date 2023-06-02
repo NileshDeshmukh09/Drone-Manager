@@ -16,6 +16,7 @@ const droneSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true, 
+    unique : true
   },
 
   createdAt: {
@@ -38,7 +39,7 @@ const droneSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Site',
   },
-  
+
 });
 
 module.exports = mongoose.model('Drone', droneSchema);

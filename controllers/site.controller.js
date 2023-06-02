@@ -128,7 +128,9 @@ exports.getAllSites =  async (req, res) => {
     res.status(200).json({
       success : true ,
       message : "Fetched all Sites !",
-      sites});
+      TotalSites : sites.length ,
+      sites
+    });
 
   } catch (error) {
     res.status(500).json({ error: 'Internal server error' });

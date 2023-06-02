@@ -79,7 +79,7 @@ const addDrone = async (req, res) => {
 const updateDrone = async (req, res) => {
   try {
     const { id } = req.params;
-    const { droneType, makeName, name } = req.body;
+    const { droneType, makeName, name , siteID } = req.body;
 
    
     // Check if the drone exists
@@ -100,7 +100,7 @@ const updateDrone = async (req, res) => {
 
   if( user.username != drone.createdBy ){
     return res.status(403).send({
-      message: "Only Owner of the Drone is allowed to Delete Drone"
+      message: "Only Owner of the Drone is allowed to update Drone"
     })
   }
 
@@ -109,7 +109,8 @@ const updateDrone = async (req, res) => {
     drone.makeName = makeName != undefined ? makeName : drone.makeName ;
     drone.name = name != undefined ? name : drone.name ;
     drone.createdBy = drone.createdBy;
-    drone.siteID = drone.siteID ;
+    // Drone can change siteID from one to another
+    drone.siteID = siteID != undefined ? siteID : drone.siteID ; 
     drone.createdAt = drone.createdAt ;
     drone.updatedAt = Date.now();
 
@@ -143,12 +144,21 @@ const getAllDrones = async (req, res) => {
       return res.status(404).json({ error: 'UnAuthorised API' });
     }
 
-    const drones = await Drone.find({createdBy : user.username });
+    const queryObj = {
+      createdBy : user.username ,
+    }
+
+    if (req.query.siteID != undefined) {
+      queryObj.siteID = req.query.siteID;
+  };
+
+    const drones = await Drone.find( queryObj );
 
     res.status(200).json({
       success : true,
-      message : `Drone Fetched !`,
-      drones
+      message :  drones.length > 0 ? `Drone Fetched !` : `No Drone Found `,
+      TotalDrone : drones.length ,
+      drones 
     });
 
   } catch (err) {
@@ -177,7 +187,6 @@ const deleteDrone =  async (req, res) => {
 
     const drone = await Drone.findOne({ _id : id});
 
-    console.log(drone)
 
     if (!drone ) {
       return res.status(404).json({ error: 'Drone not found' });
@@ -238,6 +247,8 @@ const getOneDrone = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+
 
 
 module.exports =  { getOneDrone , getAllDrones , updateDrone, addDrone , deleteDrone };
