@@ -16,11 +16,6 @@ app.use(bodyParser.urlencoded({extended:true}));
  * Setup the mongodb connection 
  */
 console.log("URL : ",process.env.DB_URL);
-//  mongoose.connect(process.env.DB_URL, ()=>{
-//         console.log("MongoDB connected ");
-
-    
-// });
 
 mongoose.connect(process.env.DB_URL)
     .then(() => {
@@ -33,9 +28,11 @@ mongoose.connect(process.env.DB_URL)
 
 const homeRoutes = require('./routes/home.routes');
 const authRoutes = require('./routes/auth.routes');
+const siteRoutes = require('./routes/site.routes');
 
 app.use(  homeRoutes );
 app.use( '/droneManager/api/v1' , authRoutes );
+app.use( '/droneManager/api/v1' , siteRoutes );
 
 
 app.listen( process.env.PORT, () => {
