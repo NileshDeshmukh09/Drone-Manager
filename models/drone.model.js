@@ -38,6 +38,7 @@ const droneSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Site',
   },
+  
 });
 
 module.exports = mongoose.model('Drone', droneSchema);

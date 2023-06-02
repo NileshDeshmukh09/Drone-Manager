@@ -18,6 +18,11 @@ const userSchema = new mongoose.Schema({
         required: true
     },
 
+    drones: {
+        type: [mongoose.Schema.Types.ObjectId],
+        ref: 'Drone',
+    },
+
 
 });
 

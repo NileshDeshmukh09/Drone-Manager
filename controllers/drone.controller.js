@@ -38,6 +38,11 @@ const addDrone = async (req, res) => {
 
    createdBy =user.username;
 
+    /**
+      * Update the User
+    */
+    
+
 
 
     const newDrone = new Drone({
@@ -49,6 +54,11 @@ const addDrone = async (req, res) => {
     });
 
     const savedDrone = await newDrone.save();
+
+    user.drones.push(savedDrone._id);
+    await user.save();
+
+    
 
     res.status(200).json({
         success : true ,
@@ -70,27 +80,46 @@ const updateDrone = async (req, res) => {
     const { id } = req.params;
     const { droneType, makeName, name } = req.body;
 
-    // Validate request body
-    if (!drone_type || !makeName || !name ) {
-      return res.status(400).json({ error: 'Invalid request body' });
-    }
-
+   
     // Check if the drone exists
     const drone = await Drone.findById(id);
+
     if (!drone) {
       return res.status(404).json({ error: 'Drone not found' });
     }
 
+     /** User ID of reported must be present in x-access-token */
+     const user = await User.findOne({
+      _id : req.userID
+  });
+
+  if ( !user ) {
+    return res.status(404).json({ error: 'UnAuthorised API' });
+  }
+
+  if( user.username != drone.createdBy ){
+    return res.status(403).send({
+      message: "Only Owner of the Drone is allowed to Delete Drone"
+    })
+  }
+
     // Update the drone fields
-    drone.drone_type = drone_type;
-    drone.make_name = make_name;
-    drone.name = name;
-    drone.deleted_by = deleted_by;
-    drone.updated_at = Date.now();
+    drone.droneType =  droneType != undefined ? droneType : drone.droneType ;
+    drone.makeName = makeName != undefined ? makeName : drone.makeName ;
+    drone.name = name != undefined ? name : drone.name ;
+    drone.createdBy = drone.createdBy;
+    drone.siteID = drone.siteID ;
+    drone.createdAt = drone.createdAt ;
+    drone.updatedAt = Date.now();
 
     const updatedDrone = await drone.save();
 
-    res.json(updatedDrone);
+    res.status(200).json({
+      success : true , 
+      message : `${drone.name} , updated Successfully ! `,
+      updatedDrone
+    });
+
   } catch (error) {
     res.status(500).json({ error: 'Internal server error' });
   }
@@ -192,7 +221,7 @@ const getOneDrone = async (req, res) => {
       return res.status(404).json({ error: 'Drone not found' });
     }
 
-    if( user.username != drone.createdBy ){
+     if( user.username != drone.createdBy ){
       return res.status(403).send({
         message: "Only Owner of the Drone is allowed to Delete Drone"
       })
