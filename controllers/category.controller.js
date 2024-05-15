@@ -72,22 +72,30 @@ const deleteCategory = async (req, res) => {
   }
 };
 
-// Get all Categorys
+// get all categories
 const getAllCategories = async (req, res) => {
+  const { name } = req.query;
 
   try {
-    const categories = await Category.find();
+    let filter = {};
+    if (name) {
+      filter.name = { $regex: new RegExp(name, 'i') }; // Case-insensitive partial match
+    }
+
+    const categories = await Category.find(filter);
+
     res.status(200).json({
-        success : true ,
-        message : categories.length > 0 ? `Fetched All Categories.` : `No Categories Available`,
-        totalCategories : categories.length ,
-        categories
+      success: true,
+      message: categories.length > 0 ? `Fetched Categories` : `No Categories Found`,
+      totalCategories: categories.length,
+      categories
     });
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: err.message });
   }
 };
+
 
 // Get a specific Category by ID
 const getOneCategory = async (req, res) => {
