@@ -13,7 +13,7 @@ To get started and run the app:
 - Give the env variable  
     - ` PORT` , 
     - ` DB_URL : mongodb+srv://nileshdeshmukh0908:Nilesh@cluster0.6ewz8ys.mongodb.net/droneDB?retryWrites=true&w=majority ,  ` 
-    - ` SECRET-KEY `
+    - ` SECRET-KEY : `enter-your-secret-key`
 
 - Run ` npm start ` to run the app on http://localhost:8000
 
