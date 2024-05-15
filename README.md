@@ -11,9 +11,9 @@ To get started and run the app:
 - Run ` npm install ` to install the corresponding node packages
 
 - Give the env variable  
-    - ` PORT` , 
+    - ` PORT : 8000` , 
     - ` DB_URL : mongodb+srv://nileshdeshmukh0908:Nilesh@cluster0.6ewz8ys.mongodb.net/droneDB?retryWrites=true&w=majority ,  ` 
-    - ` SECRET-KEY : `enter-your-secret-key`
+    - ` SECRET-KEY : enter-your-secret-key`
 
 - Run ` npm start ` to run the app on http://localhost:8000
 
