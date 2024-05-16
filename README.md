@@ -17,6 +17,20 @@ To get started and run the app:
 
 - Run ` npm start ` to run the app on http://localhost:8000
 
+
+### ScreenShots of Swaggwr API Docs 
+-![APis ](https://github.com/NileshDeshmukh09/Drone-Manager/blob/master/images/Screenshot%20(139).png?raw=true)
+-![APis ](https://github.com/NileshDeshmukh09/Drone-Manager/blob/master/images/Screenshot%20(140).png?raw=true)
+-![APis ](https://github.com/NileshDeshmukh09/Drone-Manager/blob/master/images/Screenshot%20(141).png?raw=true)
+
+
+### ER Diagrams
+![image](https://github.com/NileshDeshmukh09/Drone-Manager/assets/86465008/07deac86-7bce-410b-823b-9c2a03be4436)
+
+
+
+
+
 ## DB TABLES
 
 #### USERS
